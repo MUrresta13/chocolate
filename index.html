@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hot Chocolate Rush</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Global ambient background (used in game screen) -->
+  <div class="bg" aria-hidden="true">
+    <div class="stars"></div>
+    <div class="snow"></div>
+    <div class="train-shake"></div>
+  </div>
+
+  <!-- AUDIO (must start from a user gesture: Start Challenge button) -->
+  <audio id="bgm" src="assets/Hot%20Chocolate.mp3" preload="auto" loop></audio>
+
+  <!-- NEW: BLACK INTRO SCREEN -->
+  <main id="introScreen" class="screen active intro">
+    <button id="startChallengeBtn" class="primary big">Start Challenge</button>
+  </main>
+
+  <!-- TITLE SCREEN (now shown AFTER Start Challenge) -->
+  <main id="titleScreen" class="screen title">
+    <div class="card titleCard">
+      <h1>Hot Chocolate Rush</h1>
+      <p class="sub">Deliver the hot chocolate in time!</p>
+
+      <div class="rules">
+        <div class="rule"><span>🕒</span><b>Timer</b> keeps running.</div>
+        <div class="rule"><span>🔥</span><b>Heat</b> drains per mug.</div>
+        <div class="rule"><span>🚫</span><b>Wrong seat</b> costs time + scrambles symbols.</div>
+        <div class="rule"><span>🚆</span><b>Hard mode</b> = moving aisle + decoy symbols.</div>
+      </div>
+
+      <button id="playBtn" class="primary">Play Game</button>
+      <button id="muteBtn" class="ghost" aria-label="Toggle music">Music: Off</button>
+      <small class="hint">Tip: if music doesn’t start, tap Start Challenge again.</small>
+    </div>
+  </main>
+
+  <!-- GAME SCREEN -->
+  <main id="gameScreen" class="screen">
+    <header class="hud">
+      <div class="hud-left">
+        <div class="pill">
+          <span class="label">Time</span>
+          <span id="timeDisplay" class="value">00:00</span>
+        </div>
+        <div class="pill">
+          <span class="label">Delivered</span>
+          <span id="deliveredDisplay" class="value">0/0</span>
+        </div>
+        <div class="pill">
+          <span class="label">Mistakes</span>
+          <span id="mistakesDisplay" class="value">0</span>
+        </div>
+      </div>
+
+      <div class="hud-right">
+        <button id="restartBtn" class="ghost">Restart</button>
+      </div>
+    </header>
+
+    <section class="gameWrap">
+      <!-- Order card -->
+      <div class="orderCard">
+        <div class="orderTop">
+          <div>
+            <div class="orderTitle">Current Order</div>
+            <div id="orderText" class="orderText">Press Take Mug to begin.</div>
+          </div>
+          <div class="difficultyTag" id="difficultyTag">HARD</div>
+        </div>
+
+        <div class="meters">
+          <div class="meter">
+            <div class="meterLabel">Heat</div>
+            <div class="bar">
+              <div id="heatFill" class="fill"></div>
+            </div>
+          </div>
+          <div class="meter">
+            <div class="meterLabel">Train Sway</div>
+            <div class="bar alt">
+              <div id="swayFill" class="fill altFill"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="trayRow">
+          <button id="takeMugBtn" class="primary">Take Mug ☕</button>
+          <div class="tray">
+            <div class="trayLabel">Tray</div>
+            <div id="traySymbol" class="traySymbol">—</div>
+          </div>
+        </div>
+
+        <div id="statusLine" class="statusLine">Ready.</div>
+      </div>
+
+      <!-- Aisle / seats -->
+      <div class="aisle">
+        <div class="aisleTitle">Tap the correct seat before the mug goes cold.</div>
+        <div id="seats" class="seats" aria-label="Train seats grid"></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- SUCCESS MODAL -->
+  <div id="successModal" class="modal" aria-hidden="true">
+    <div class="modalCard">
+      <h2>Delivery Complete</h2>
+      <p>You served every mug in time.</p>
+
+      <div class="codeBox">
+        <div class="codeLabel">PASSCODE</div>
+        <div id="codeText" class="codeText">ALLABOARD25</div>
+      </div>
+
+      <div class="modalButtons">
+        <button id="copyBtn" class="primary">Copy Code</button>
+        <button id="playAgainBtn" class="ghost">Play Again</button>
+      </div>
+
+      <div id="copyStatus" class="copyStatus"></div>
+    </div>
+  </div>
+
+  <!-- FAIL MODAL -->
+  <div id="failModal" class="modal" aria-hidden="true">
+    <div class="modalCard">
+      <h2>Too Slow</h2>
+      <p id="failReason">The cocoa went cold.</p>
+      <div class="modalButtons">
+        <button id="tryAgainBtn" class="primary">Try Again</button>
+        <button id="backBtn" class="ghost">Back to Title</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
