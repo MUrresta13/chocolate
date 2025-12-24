@@ -42,17 +42,19 @@ const backBtn = document.getElementById("backBtn");
 const bgm = document.getElementById("bgm");
 let musicOn = false;
 
-/* HARD CONFIG */
+
 const SYMBOLS = ["🎟️","⭐","❄️","🔔","🎄","☕","🧣","🕯️","🍬","🦌","🛷","🎁"];
-const SEAT_COUNT = 18;
-const MUGS_TO_DELIVER = 10;
-const START_TIME_S = 55;
-const HEAT_PER_MUG_S = 4.8;
-const WRONG_TIME_PENALTY_S = 2.8;
-const WRONG_HEAT_SHOCK = 0.45;
-const SCRAMBLE_EVERY_MS = 1300;
-const SWAY_UPDATE_MS = 140;
-const MAX_SWAY_PX = 16;
+/* MEDIUM CONFIG */
+const SEAT_COUNT = 14;            // was 18
+const MUGS_TO_DELIVER = 8;        // was 10
+const START_TIME_S = 70;          // was 55
+const HEAT_PER_MUG_S = 6.5;       // was 4.8
+const WRONG_TIME_PENALTY_S = 1.6; // was 2.8
+const WRONG_HEAT_SHOCK = 0.22;    // was 0.45
+const SCRAMBLE_EVERY_MS = 1850;   // was 1300
+const SWAY_UPDATE_MS = 190;       // was 140
+const MAX_SWAY_PX = 10;           // was 16
+
 
 /* STATE */
 let running = false;
@@ -186,7 +188,7 @@ function scrambleSeatSymbols(){
     seatSymbols[correctSeatIndex] = currentSymbol;
 
     const near = pick(SYMBOLS.filter(s => s !== currentSymbol));
-    const extra = randInt(3,5);
+    const extra = randInt(1,3);
     let placed = 0;
     while(placed < extra){
       const j = randInt(0, SEAT_COUNT - 1);
