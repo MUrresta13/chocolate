@@ -1,0 +1,341 @@
+:root{
+  --bg:#070a12;
+  --card:#0f1422;
+  --ink:#eef2ff;
+  --muted:#aab4d6;
+  --accent:#ffd36a;
+  --accent2:#7dd3fc;
+  --danger:#ff6b6b;
+  --ok:#7cffa1;
+  --shadow: 0 18px 60px rgba(0,0,0,.55);
+}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+  color:var(--ink);
+  background: radial-gradient(1200px 800px at 70% 10%, #13204a 0%, var(--bg) 55%, #04050a 100%);
+  overflow:hidden;
+}
+
+/* Ambient background used in-game */
+.bg{position:fixed; inset:0; pointer-events:none; overflow:hidden; z-index:0}
+.stars{
+  position:absolute; inset:-20%;
+  background-image:
+    radial-gradient(2px 2px at 10% 20%, rgba(255,255,255,.85) 40%, transparent 41%),
+    radial-gradient(1px 1px at 70% 30%, rgba(255,255,255,.75) 40%, transparent 41%),
+    radial-gradient(1.5px 1.5px at 40% 80%, rgba(255,255,255,.65) 40%, transparent 41%),
+    radial-gradient(1px 1px at 85% 75%, rgba(255,255,255,.65) 40%, transparent 41%),
+    radial-gradient(1px 1px at 25% 55%, rgba(255,255,255,.55) 40%, transparent 41%);
+  opacity:.7;
+  filter: blur(.2px);
+  animation: drift 9s linear infinite;
+}
+@keyframes drift{from{transform:translateY(0)}to{transform:translateY(40px)}}
+
+.snow{
+  position:absolute; inset:0;
+  background-image:
+    radial-gradient(2px 2px at 20% 10%, rgba(255,255,255,.35) 50%, transparent 52%),
+    radial-gradient(1.6px 1.6px at 70% 25%, rgba(255,255,255,.30) 50%, transparent 52%),
+    radial-gradient(1.8px 1.8px at 45% 60%, rgba(255,255,255,.25) 50%, transparent 52%),
+    radial-gradient(1.4px 1.4px at 82% 52%, rgba(255,255,255,.30) 50%, transparent 52%),
+    radial-gradient(1.2px 1.2px at 15% 75%, rgba(255,255,255,.25) 50%, transparent 52%);
+  opacity:.9;
+  animation: snow 5.5s linear infinite;
+}
+@keyframes snow{from{transform:translateY(-20px)}to{transform:translateY(55px)}}
+
+.train-shake{
+  position:absolute; inset:-10%;
+  background: linear-gradient(180deg, rgba(255,211,106,.06), rgba(125,211,252,.03));
+  mix-blend-mode:screen;
+  animation: shake 900ms ease-in-out infinite;
+  opacity:.6;
+}
+@keyframes shake{
+  0%{transform:translate(0,0)}
+  20%{transform:translate(1px,-1px)}
+  40%{transform:translate(-1px,1px)}
+  60%{transform:translate(2px,0)}
+  80%{transform:translate(-1px,-1px)}
+  100%{transform:translate(0,0)}
+}
+
+/* Screens */
+.screen{
+  position:relative;
+  height:100%;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:18px;
+  z-index:1;
+}
+.screen.active{display:flex}
+
+/* Intro: pure black */
+.screen.intro{
+  background:#000;
+}
+button{
+  border:0;
+  border-radius: 14px;
+  padding: 12px 14px;
+  font-size: 1rem;
+  cursor:pointer;
+  color: var(--ink);
+}
+.primary{
+  background: linear-gradient(180deg, rgba(255,211,106,.95), rgba(255,211,106,.70));
+  color:#201600;
+  font-weight:800;
+}
+.primary:active{transform:translateY(1px)}
+.ghost{
+  background: rgba(255,255,255,.07);
+  border: 1px solid rgba(255,255,255,.12);
+}
+.big{
+  padding: 16px 18px;
+  font-size: 1.05rem;
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+}
+
+/* Title screen background image */
+.screen.title{
+  background:
+    linear-gradient(180deg, rgba(0,0,0,.55), rgba(0,0,0,.70)),
+    url("assets/Polar%20Express.PNG") center center / cover no-repeat;
+}
+
+/* Card */
+.card{
+  width:min(720px, 94vw);
+  background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(0,0,0,.25));
+  border:1px solid rgba(255,255,255,.14);
+  box-shadow: var(--shadow);
+  border-radius: 18px;
+  padding: 22px 18px;
+  backdrop-filter: blur(10px);
+}
+.titleCard{
+  background: linear-gradient(180deg, rgba(0,0,0,.45), rgba(0,0,0,.30));
+}
+h1{
+  margin: 4px 0 8px;
+  font-size: clamp(2.0rem, 4vw, 3.0rem);
+  letter-spacing:.4px;
+}
+.sub{margin:0 0 14px; color:rgba(255,255,255,.85); line-height:1.3}
+.hint{display:block; margin-top:10px; color:rgba(255,255,255,.70)}
+
+/* Rules */
+.rules{
+  display:grid;
+  grid-template-columns: 1fr;
+  gap:10px;
+  margin: 14px 0 16px;
+}
+.rule{
+  background: rgba(0,0,0,.20);
+  border:1px solid rgba(255,255,255,.10);
+  border-radius: 14px;
+  padding: 10px 12px;
+  display:flex;
+  gap:10px;
+  align-items:center;
+}
+.rule span{font-size:1.1rem}
+.rule b{margin-right:6px}
+
+/* HUD */
+.hud{
+  position:fixed;
+  top:0; left:0; right:0;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding: 12px 12px;
+  z-index:5;
+}
+.hud-left{display:flex; gap:10px; flex-wrap:wrap}
+.pill{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  padding: 9px 12px;
+  border-radius: 999px;
+  background: rgba(0,0,0,.25);
+  border:1px solid rgba(255,255,255,.10);
+  backdrop-filter: blur(10px);
+}
+.pill .label{color:rgba(255,255,255,.72); font-size:.9rem}
+.pill .value{font-weight:900}
+
+/* Game layout */
+.gameWrap{
+  width:min(1080px, 96vw);
+  margin-top:64px;
+  display:grid;
+  grid-template-columns: 1fr;
+  gap:14px;
+}
+.orderCard, .aisle{
+  background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(0,0,0,.12));
+  border:1px solid rgba(255,255,255,.10);
+  border-radius: 18px;
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(10px);
+  padding: 14px;
+}
+.orderTop{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:10px;
+}
+.orderTitle{font-size:.9rem; color:rgba(255,255,255,.72)}
+.orderText{font-size:1.2rem; font-weight:900; margin-top:4px}
+.difficultyTag{
+  padding: 7px 10px;
+  border-radius: 999px;
+  background: rgba(255,107,107,.14);
+  border:1px solid rgba(255,107,107,.35);
+  color:#ffd0d0;
+  font-weight:900;
+  letter-spacing:.6px;
+}
+
+.meters{display:grid; gap:10px; margin: 12px 0}
+.meterLabel{color:rgba(255,255,255,.75); font-size:.9rem; margin-bottom:6px}
+.bar{
+  height: 14px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.10);
+  overflow:hidden;
+}
+.fill{
+  height:100%;
+  width: 0%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(255,211,106,.95), rgba(255,107,107,.95));
+  transition: width 80ms linear;
+}
+.bar.alt .fill{background: linear-gradient(90deg, rgba(125,211,252,.95), rgba(167,139,250,.95))}
+.trayRow{
+  display:flex;
+  gap:10px;
+  align-items:stretch;
+  margin-top:10px;
+}
+.tray{
+  flex:1;
+  border-radius: 14px;
+  background: rgba(0,0,0,.20);
+  border:1px solid rgba(255,255,255,.10);
+  padding: 10px 12px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.trayLabel{color:rgba(255,255,255,.72)}
+.traySymbol{
+  font-weight:1000;
+  font-size:1.25rem;
+  letter-spacing:.6px;
+}
+.statusLine{
+  margin-top: 10px;
+  color: rgba(255,255,255,.85);
+}
+
+/* Seats */
+.aisleTitle{color:rgba(255,255,255,.75); margin-bottom:10px}
+.seats{
+  display:grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap:10px;
+  user-select:none;
+}
+.seat{
+  position:relative;
+  min-height: 66px;
+  border-radius: 16px;
+  background: rgba(0,0,0,.22);
+  border:1px solid rgba(255,255,255,.10);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:1000;
+  font-size:1.15rem;
+  touch-action: manipulation;
+  overflow:hidden;
+  transform: translate(var(--x,0px), var(--y,0px)) rotate(var(--r,0deg));
+  transition: transform 140ms ease, border-color 140ms ease;
+}
+.seat:active{transform: translate(var(--x,0px), calc(var(--y,0px) + 1px)) rotate(var(--r,0deg))}
+.seat .tag{
+  position:absolute;
+  bottom:6px;
+  right:8px;
+  font-size:.75rem;
+  color:rgba(255,255,255,.55);
+  font-weight:800;
+}
+.seat.good{border-color: rgba(124,255,161,.50)}
+.seat.bad{border-color: rgba(255,107,107,.55)}
+.seat.decoy::before{
+  content:"";
+  position:absolute; inset:0;
+  background: radial-gradient(220px 120px at 20% 20%, rgba(255,255,255,.10), transparent 60%);
+  opacity:.7;
+}
+
+/* Modals */
+.modal{
+  position:fixed; inset:0;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding: 18px;
+  background: rgba(0,0,0,.58);
+  z-index: 10;
+}
+.modal.show{display:flex}
+.modalCard{
+  width:min(520px, 92vw);
+  border-radius: 18px;
+  background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(0,0,0,.14));
+  border:1px solid rgba(255,255,255,.12);
+  box-shadow: var(--shadow);
+  padding: 18px;
+}
+.modalCard h2{margin:6px 0 8px}
+.modalButtons{display:flex; gap:10px; margin-top:14px; flex-wrap:wrap}
+.codeBox{
+  margin-top:12px;
+  border-radius: 16px;
+  background: rgba(0,0,0,.25);
+  border:1px solid rgba(255,255,255,.10);
+  padding: 12px;
+}
+.codeLabel{color:rgba(255,255,255,.70); font-size:.85rem}
+.codeText{
+  margin-top:6px;
+  font-weight:1000;
+  letter-spacing: 1.2px;
+  font-size: 1.4rem;
+}
+.copyStatus{margin-top:10px; color:rgba(255,255,255,.80)}
+
+/* Responsive */
+@media (min-width: 880px){
+  .gameWrap{grid-template-columns: 420px 1fr; align-items:start}
+  .seats{grid-template-columns: repeat(6, 1fr)}
+}
